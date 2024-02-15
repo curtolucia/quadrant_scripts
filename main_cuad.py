@@ -36,7 +36,14 @@ for day in range(1, 32):
             col_cov_uw = ['cov_uw_1.5m', 'cov_uw_3m', 'cov_uw_5m', 'cov_uw_7m']
             check_calidad = (calidad[col_cov_uw] < lim_calidad).all(axis=1)
 
-            if check_calidad.all():
+            col_uw = ['u_1.5m', 'w_1.5m', 'u_3m', 'w_3m', 'u_5m', 'w_5m', \
+            'u_7m', 'w_7m']
+            check_faltantes = (faltantes[col_uw] < lim_faltantes).all(axis=1)
+
+            if check_calidad.all() & check_faltantes.all():
+                
+            else:
+                continue
 
 
 #Creo el directorio de salida (ruta_salida) si no existe

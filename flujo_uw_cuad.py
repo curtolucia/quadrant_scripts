@@ -3,6 +3,75 @@ import pandas as pd
 import math
 import numpy as np
 
+def flujo_uw_cuad(flujos_desvios):
+
+    flujos_desvios = flujos_desvios.copy()
+
+#leo de los archivos las columnas correspondientes a U
+#para los niveles de 1.5 m, 3 m, 5 m y 7 m
+    u_desvio_1_5 = flujo_uw_cuad['u_1.5m']
+    u_desvio_3 = flujo_uw_cuad['u_3m']
+    u_desvio_5 = flujo_uw_cuad['u_5m']
+    u_desvio_7 = flujo_uw_cuad['u_7m']
+
+#leo de los archivos las columnas correspondientes a v
+#para los niveles de 1.5 m, 3 m, 5 m y 7 m
+    v_desvio_1_5 = flujo_uw_cuad['v_1.5m']
+    v_desvio_3 = flujo_uw_cuad['v_3m']
+    v_desvio_5 = flujo_uw_cuad['v_5m']
+    v_desvio_7 = flujo_uw_cuad['v_7m']
+
+#leo de los archivos las columnas correspondientes a w
+#para los niveles de 1.5 m, 3 m, 5 m y 7 m
+    w_desvio_1_5 = flujo_uw_cuad['w_1.5m']
+    w_desvio_3 = flujo_uw_cuad['w_3m']
+    w_desvio_5 = flujo_uw_cuad['w_5m']
+    w_desvio_7 = flujo_uw_cuad['w_7m']
+
+#leo las cov de cantidad de movimiento u'w' y v'w'
+#para los niveles de 1.5 m, 3 m, 5 m y 7 m
+    cov_uw_1_5 = flujo_uw_cuad['cov_uw_1.5m']
+    cov_uw_3 = flujo_uw_cuad['cov_uw_3m']
+    cov_uw_5 = flujo_uw_cuad['cov_uw_5m']
+    cov_uw_7 = flujo_uw_cuad['cov_uw_7m']
+
+    cov_vw_1_5 = flujo_vw_cuad['cov_vw_1.5m']
+    cov_vw_3 = flujo_vw_cuad['cov_vw_3m']
+    cov_vw_5 = flujo_vw_cuad['cov_vw_5m']
+    cov_vw_7 = flujo_vw_cuad['cov_vw_7m']
+
+# Iterar sobre los datos
+    for u_1_5, w_1_5 in zip(u_desvio_1_5, w_desvio_1_5):
+
+        if u_1_5 >= 0 and w_1_5 >= 0:
+            cov_uw_c1_1_5 = cov_uw_1_5
+            cov_uw_c2_1_5 = 0
+            cov_uw_c3_1_5 = 0
+            cov_uw_c4_1_5 = 0
+
+        elif u_1_5 < 0 and w_1_5 > 0:
+            cov_uw_c1_1_5 = 0
+            cov_uw_c2_1_5 = cov_uw_1_5
+            cov_uw_c3_1_5 = 0
+            cov_uw_c4_1_5 = 0
+
+        elif u_1_5 < 0 and w_1_5 < 0:
+            cov_uw_c1_1_5 = 0
+            cov_uw_c2_1_5 = 0
+            cov_uw_c3_1_5 = cov_uw_1_5
+            cov_uw_c4_1_5 = 0
+
+        elif u_1_5 > 0 and w_1_5 < 0:
+            cov_uw_c1_1_5 = 0
+            cov_uw_c2_1_5 = 0
+            cov_uw_c3_1_5 = 0
+            cov_uw_c4_1_5 = cov_uw_1_5
+
+    # Agregar los resultados a la lista de resultados
+    resultados.append((u_1_5, w_1_5, cov_uw_c1_1_5, cov_uw_c2_1_5, cov_uw_c3_1_5, cov_uw_c4_1_5))
+    #voy por aca, tengo que hacer los otros niveles y los v'w'
+
+
 def flujo_uw_cuad(flujos_desvios, calidad, cuad_inst):
 
 
