@@ -41,7 +41,7 @@ for day in range(1, 32):
             check_faltantes = (faltantes[col_uw] < lim_faltantes).all(axis=1)
 
             if check_calidad.all() & check_faltantes.all():
-                
+
             else:
                 continue
 
