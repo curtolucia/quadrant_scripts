@@ -1,3 +1,52 @@
+import pandas as pd
+import os
+import math
+import numpy as np
+
+def flujo_uw_S(totales_uw_cuad,flujos_medios):
+
+    val_medios = totales_uw_cuad.mean(axis=0,skipna=True)
+
+#Calculo S de cada cuadrante, como el promedio de cada cuadrante (H=0)
+#dividido el promedio total (de todos los cuadrantes, H=0)
+#para el nivel de 1.5 m
+    S_cuad1_1_5 = float(val_medios['cov_uw_c1_1.5m'] / flujos_medios['cov_uw_1.5m'])
+    S_cuad2_1_5 = float(val_medios['cov_uw_c2_1.5m'] / flujos_medios['cov_uw_1.5m'])
+    S_cuad3_1_5 = float(val_medios['cov_uw_c3_1.5m'] / flujos_medios['cov_uw_1.5m'])
+    S_cuad4_1_5 = float(val_medios['cov_uw_c4_1.5m'] / flujos_medios['cov_uw_1.5m'])
+
+#para el nivel de 3 m
+    S_cuad1_3 = float(val_medios['cov_uw_c1_3m'] / flujos_medios['cov_uw_3m'])
+    S_cuad2_3 = float(val_medios['cov_uw_c2_3m'] / flujos_medios['cov_uw_3m'])
+    S_cuad3_3 = float(val_medios['cov_uw_c3_3m'] / flujos_medios['cov_uw_3m'])
+    S_cuad4_3 = float(val_medios['cov_uw_c4_3m'] / flujos_medios['cov_uw_3m'])
+
+#para el nivel de 5 m
+    S_cuad1_5 = float(val_medios['cov_uw_c1_5m'] / flujos_medios['cov_uw_5m'])
+    S_cuad2_5 = float(val_medios['cov_uw_c2_5m'] / flujos_medios['cov_uw_5m'])
+    S_cuad3_5 = float(val_medios['cov_uw_c3_5m'] / flujos_medios['cov_uw_5m'])
+    S_cuad4_5 = float(val_medios['cov_uw_c4_5m'] / flujos_medios['cov_uw_5m'])
+
+#para el nivel de 7 m
+    S_cuad1_7 = float(val_medios['cov_uw_c7_5m'] / flujos_medios['cov_uw_7m'])
+    S_cuad2_7 = float(val_medios['cov_uw_c7_5m'] / flujos_medios['cov_uw_7m'])
+    S_cuad3_7 = float(val_medios['cov_uw_c7_5m'] / flujos_medios['cov_uw_7m'])
+    S_cuad4_7 = float(val_medios['cov_uw_c7_5m'] / flujos_medios['cov_uw_7m'])
+
+    S_cuad_uw = pd.concat([S_cuad1_1_5, S_cuad2_1_5, S_cuad3_1_5, S_cuad4_1_5, \
+    S_cuad1_3, S_cuad2_3, S_cuad3_3, S_cuad4_3, \
+    S_cuad1_5, S_cuad2_5, S_cuad3_5, S_cuad4_5, \
+    S_cuad1_7, S_cuad2_7, S_cuad3_7, S_cuad4_7], \
+    axis=1, keys=['S_cuad1_1.5m', 'S_cuad2_1.5m', 'S_cuad3_1.5m', 'S_cuad4_1.5m', \
+    'S_cuad1_3m', 'S_cuad2_3m', 'S_cuad3_3m', 'S_cuad4_3m', \
+    'S_cuad1_5m', 'S_cuad2_5m', 'S_cuad3_5m', 'S_cuad4_5m', \
+    'S_cuad1_7m', 'S_cuad2_7m', 'S_cuad3_7m', 'S_cuad4_7m'])
+    # 'u_desvio_5m', 'v_desvio_5m', 'w_desvio_5m', 'T_desvio_5m', 'cov_uw_5m', 'cov_vw_5m', 'cov_wT_5m', \
+    # 'u_desvio_7m', 'v_desvio_7m', 'w_desvio_7m', 'T_desvio_7m', 'cov_uw_7m', 'cov_vw_7m', 'cov_wT_7m', \
+    # 'CO2_desvio_3m', 'H2O_desvio_3m', 'q_desvio_3m', 'cov_wCO2_3m', 'cov_wH2O_3m','cov_wq_3m','cov_qCO2_3m','cov_qT_3m','cov_CO2T_3m'])
+
+    return S_cuad_uw
+
 def flujo_uw_S_H(ruta_entrada_totales,ruta_entrada_medios,ruta_salida,datos):
 
 #Traigo las librerias que necesito

@@ -1,7 +1,7 @@
 import os
 import pandas as pd
 
-from flujo_uw_cuad import flujo_uw_cuad
+from func_uw_cuad import calc_cuad,flujo_uw_cuad
 from flujo_uw_S_H import flujo_uw_S_H
 
 from flujo_wT_cuad import flujo_wT_cuad
@@ -41,6 +41,11 @@ for day in range(1, 32):
             check_faltantes = (faltantes[col_uw] < lim_faltantes).all(axis=1)
 
             if check_calidad.all() & check_faltantes.all():
+
+                totales_uw_cuad = flujo_uw_cuad(flujos_desvios)
+                totales_uw_cuad.to_csv (ruta_salida_cuad + datos + str(day) + '_' + str(arch) + '.csv', index=False)
+
+                S_uw_cuad = flujo_uw_S(totales_uw_cuad,flujos_medios)
 
             else:
                 continue
