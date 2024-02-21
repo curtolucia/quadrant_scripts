@@ -4,40 +4,40 @@ import math
 import numpy as np
 
 #Defino una funcion para separar las covarianzas por cuadrantes
-def calc_cuad(u, w):
-
-    u_w_c1 = np.where((u >= 0) & (w >= 0), cov_uw, 0)
-    u_w_c2 = np.where((u < 0) & (w > 0), cov_uw, 0)
-    u_w_c3 = np.where((u < 0) & (w < 0), cov_uw, 0)
-    u_w_c4 = np.where((u > 0) & (w < 0), cov_uw, 0)
-
-    return u_w_c1, u_w_c2, u_w_c3, u_w_c4
+# def calc_cuad(u, w, cov_uw):
 #
+#     u_w_c1 = np.where((u >= 0) & (w >= 0), cov_uw, 0)
+#     u_w_c2 = np.where((u < 0) & (w > 0), cov_uw, 0)
+#     u_w_c3 = np.where((u < 0) & (w < 0), cov_uw, 0)
+#     u_w_c4 = np.where((u > 0) & (w < 0), cov_uw, 0)
 #
+#     return u_w_c1, u_w_c2, u_w_c3, u_w_c4
+
+
 def flujo_uw_cuad(flujos_desvios):
 
     flujos_desvios = flujos_desvios.copy()
 
 #leo de los archivos las columnas correspondientes a U
 #para los niveles de 1.5 m, 3 m, 5 m y 7 m
-    u_desvio_1_5 = flujos_desvios['u_1.5m']
-    u_desvio_3 = flujos_desvios['u_3m']
-    u_desvio_5 = flujos_desvios['u_5m']
-    u_desvio_7 = flujos_desvios['u_7m']
+    u_desvio_1_5 = flujos_desvios['u_desvio_1.5m']
+    u_desvio_3 = flujos_desvios['u_desvio_3m']
+    u_desvio_5 = flujos_desvios['u_desvio_5m']
+    u_desvio_7 = flujos_desvios['u_desvio_7m']
 
 #leo de los archivos las columnas correspondientes a v
 #para los niveles de 1.5 m, 3 m, 5 m y 7 m
-    v_desvio_1_5 = flujos_desvios['v_1.5m']
-    v_desvio_3 = flujos_desvios['v_3m']
-    v_desvio_5 = flujos_desvios['v_5m']
-    v_desvio_7 = flujos_desvios['v_7m']
+    v_desvio_1_5 = flujos_desvios['v_desvio_1.5m']
+    v_desvio_3 = flujos_desvios['v_desvio_3m']
+    v_desvio_5 = flujos_desvios['v_desvio_5m']
+    v_desvio_7 = flujos_desvios['v_desvio_7m']
 
 #leo de los archivos las columnas correspondientes a w
 #para los niveles de 1.5 m, 3 m, 5 m y 7 m
-    w_desvio_1_5 = flujos_desvios['w_1.5m']
-    w_desvio_3 = flujos_desvios['w_3m']
-    w_desvio_5 = flujos_desvios['w_5m']
-    w_desvio_7 = flujos_desvios['w_7m']
+    w_desvio_1_5 = flujos_desvios['w_desvio_1.5m']
+    w_desvio_3 = flujos_desvios['w_desvio_3m']
+    w_desvio_5 = flujos_desvios['w_desvio_5m']
+    w_desvio_7 = flujos_desvios['w_desvio_7m']
 
 #leo las cov de cantidad de movimiento u'w' y v'w'
 #para los niveles de 1.5 m, 3 m, 5 m y 7 m
@@ -51,33 +51,97 @@ def flujo_uw_cuad(flujos_desvios):
     cov_vw_5 = flujos_desvios['cov_vw_5m']
     cov_vw_7 = flujos_desvios['cov_vw_7m']
 
-# Creo lista para almacenar los datos
+# # Creo lista para almacenar los datos
     cuad_inst = []
+    cuad_inst_1_5 = []
+    cuad_inst_3 = []
+    cuad_inst_5 = []
+    cuad_inst_7 = []
+
+
+# Definir los nombres de las columnas de u_desvio y w_desvio
+    columnas_u_desvio = ['u_desvio_1.5m', 'u_desvio_3m', 'u_desvio_5m', 'u_desvio_7m']
+    columnas_w_desvio = ['w_desvio_1.5m', 'w_desvio_3m', 'w_desvio_5m', 'w_desvio_7m']
+    columnas_cov_desvio = ['cov_uw_1.5m', 'cov_uw_3m', 'cov_uw_5m', 'cov_uw_7m']
+
+    # Iterar sobre los nombres de las columnas
+    for u_desvio_1_5, w_desvio_1_5, cov_vw_1_5 in zip(u_desvio_1_5, w_desvio_1_5, cov_vw_1_5):
+        # Extraer las columnas de u_desvio y w_desvio
+        # u_desvio = u_desvio_1_5
+        # w_desvio = w_desvio_1_5
+        # cov_uw = flujos_desvios[col_uw]
+
+        # Calcular los cuadrantes para las columnas de u_desvio y w_desvio
+        cov_uw_c1 = np.where((u_desvio_1_5 >= 0) & (w_desvio_1_5 >= 0), cov_uw_1_5, 0)
+        cov_uw_c2 = np.where((u_desvio_1_5 < 0) & (w_desvio_1_5 > 0), cov_uw_1_5, 0)
+        cov_uw_c3 = np.where((u_desvio_1_5 < 0) & (w_desvio_1_5 < 0), cov_uw_1_5, 0)
+        cov_uw_c4 = np.where((u_desvio_1_5 > 0) & (w_desvio_1_5 < 0), cov_uw_1_5, 0)
+        # Guardar los resultados en 'resultados'
+        # cov_uw_c = pd.concat([pd.DataFrame(cov_uw_c1),pd.DataFrame(cov_uw_c2),pd.DataFrame(cov_uw_c3),pd.DataFrame(cov_uw_c4)])
+
+        cuad_inst_1_5.append([cov_uw_c1,cov_uw_c2,cov_uw_c3,cov_uw_c4])
+
+    # for u_desvio_3, w_desvio_3, cov_vw_3 in zip(u_desvio_3, w_desvio_3, cov_vw_3):
+    #     # Extraer las columnas de u_desvio y w_desvio
+    #     u_desvio = pd.Series(u_desvio_3)
+    #     w_desvio = pd.Series(w_desvio_3)
+    #     # cov_uw = flujos_desvios[col_uw]
+    #
+    #     # Calcular los cuadrantes para las columnas de u_desvio y w_desvio
+    #     cov_uw_c1 = pd.Series(np.where((u_desvio_3 >= 0) & (w_desvio_3 >= 0), cov_uw_3, 0))
+    #     cov_uw_c2 = pd.Series(np.where((u_desvio_3 < 0) & (w_desvio_3 > 0), cov_uw_3, 0))
+    #     cov_uw_c3 = pd.Series(np.where((u_desvio_3 < 0) & (w_desvio_3 < 0), cov_uw_3, 0))
+    #     cov_uw_c4 = pd.Series(np.where((u_desvio_3 > 0) & (w_desvio_3 < 0), cov_uw_3, 0))
+    #
+    #     # Guardar los resultados en 'resultados'
+    #     cov_uw_c = pd.DataFrame({
+    #     'u_desvio_1.5m': u_desvio, # Incluir la columna 'u_desvio'
+    #     'w_desvio_1.5m': w_desvio,
+    #     'cov_uw_c1_1.5m': cov_uw_c1,
+    #     'cov_uw_c2_1.5m': cov_uw_c2,
+    #     'cov_uw_c3_1.5m': cov_uw_c3,
+    #     'cov_uw_c4_1.5m': cov_uw_c4,
+    #       # Incluir la columna 'w_desvio'
+    # }u_desvio, w_desvio,cov_uw_c1,cov_uw_c2,cov_uw_c3,cov_uw_c4)
+    #     cuad_inst_3.append(cov_uw_c)
+
+    # resultado_final = pd.concat(cuad_inst_1_5, axis=0)
+    print(cuad_inst_1_5)
+    return resultado_final
 #Con el for recorro los datos de u'w' separando por cuadrantes
 #para los niveles de 1.5 m, 3 m, 5 m y 7 m
-    for u_1_5, u_3, u_5, u_7, w_1_5, w_3, w_5, w_7 in \
-    zip(u_desvio_1_5, u_desvio_3 ,u_desvio_5, u_desvio_7, w_desvio_1_5, w_desvio_3 ,w_desvio_5, w_desvio_7):
-
-        cov_uw_c1_1_5, cov_uw_c2_1_5, cov_uw_c3_1_5, cov_uw_c4_1_5 = calc_cuad(u_1_5,w_1_5)
-        cov_uw_c1_3, cov_uw_c2_3, cov_uw_c3_3, cov_uw_c4_3 = calc_cuad(u_3,w_3)
-        cov_uw_c1_5, cov_uw_c2_5, cov_uw_c3_5, cov_uw_c4_5 = calc_cuad(u_5,w_5)
-        cov_uw_c1_7, cov_uw_c2_7, cov_uw_c3_7, cov_uw_c4_7 = calc_cuad(u_7,w_7)
-
-        cuad_inst.append([u_1_5,w_1_5,cov_uw_c1_1_5, cov_uw_c2_1_5, cov_uw_c3_1_5, cov_uw_c4_1_5,\
-        u_3,w_3,cov_uw_c1_3, cov_uw_c2_3, cov_uw_c3_3, cov_uw_c4_3,\
-        u_5,w_5,cov_uw_c1_5, cov_uw_c2_5, cov_uw_c3_5, cov_uw_c4_5,\
-        u_7,w_7,cov_uw_c1_7, cov_uw_c2_7, cov_uw_c3_7, cov_uw_c4_7])
-
-    cuad_inst_df = pd.DataFrame(cuad_inst, columns=['u_desvio_1.5m', 'w_desvio_1.5m', \
-    'cov_uw_c1_1.5m', 'cov_uw_c2_1.5m', 'cov_uw_c3_1.5m', 'cov_uw_c4_1.5m', \
-    'u_desvio_3m', 'w_desvio_3m', \
-    'cov_uw_c1_3m', 'cov_uw_c2_3m', 'cov_uw_c3_3m', 'cov_uw_c4_3m', \
-    'u_desvio_5m', 'w_desvio_5m', \
-    'cov_uw_c1_5m', 'cov_uw_c2_5m', 'cov_uw_c3_5m', 'cov_uw_c4_5m', \
-    'u_desvio_7m', 'w_desvio_7m', \
-    'cov_uw_c1_7m', 'cov_uw_c2_7m', 'cov_uw_c3_7m', 'cov_uw_c4_7m'])
-
-    return cuad_inst_df
+    # for u_1_5, w_1_5, u_3, w_3, u_5, w_5, u_7, w_7\
+    #  in zip(u_desvio_1_5, w_desvio_1_5, u_desvio_3, w_desvio_3, u_desvio_5, w_desvio_5, u_desvio_7, w_desvio_7):
+    #
+    #     cov_uw_c1_1_5, cov_uw_c2_1_5, cov_uw_c3_1_5, cov_uw_c4_1_5 = calc_cuad(u_1_5,w_1_5,cov_uw_1_5)
+    #     cuad_inst_1_5.append([u_1_5, w_1_5, cov_uw_c1_1_5, cov_uw_c2_1_5, cov_uw_c3_1_5, cov_uw_c4_1_5])
+    #
+    # # for u_3, w_3 in zip(u_desvio_3, w_desvio_3):
+    #     cov_uw_c1_3, cov_uw_c2_3, cov_uw_c3_3, cov_uw_c4_3 = calc_cuad(u_3,w_3,cov_uw_3)
+    #     cuad_inst_3.append([u_3, w_3, cov_uw_c1_3, cov_uw_c2_3, cov_uw_c3_3, cov_uw_c4_3)]
+    #
+    # # for u_5, w_5 in zip(u_desvio_5, w_desvio_5):
+    #     cov_uw_c1_5, cov_uw_c2_5, cov_uw_c3_5, cov_uw_c4_5 = calc_cuad(u_5,w_5,cov_uw_5)
+    #     cuad_inst_5.append([u_5, w_5, cov_uw_c1_5, cov_uw_c2_5, cov_uw_c3_5, cov_uw_c4_5])
+    #
+    # # for u_7, w_7 in zip(u_desvio_7, w_desvio_7):
+    #     cov_uw_c1_7, cov_uw_c2_7, cov_uw_c3_7, cov_uw_c4_7 = calc_cuad(u_7,w_7,cov_uw_7)
+    #     cuad_inst_7.append([u_7, w_7, cov_uw_c1_7, cov_uw_c2_7, cov_uw_c3_7, cov_uw_c4_7])
+    #
+    # cuad_inst = pd.concat([cuad_inst_1_5, cuad_inst_3, cuad_inst_5, cuad_inst_7])
+    #
+    #
+    # cuad_inst_df = pd.DataFrame(cuad_inst, columns=['u_desvio_1.5m', 'w_desvio_1.5m', \
+    # 'cov_uw_c1_1.5m', 'cov_uw_c2_1.5m', 'cov_uw_c3_1.5m', 'cov_uw_c4_1.5m', \
+    # 'u_desvio_3m', 'w_desvio_3m', \
+    # 'cov_uw_c1_3m', 'cov_uw_c2_3m', 'cov_uw_c3_3m', 'cov_uw_c4_3m', \
+    # 'u_desvio_5m', 'w_desvio_5m', \
+    # 'cov_uw_c1_5m', 'cov_uw_c2_5m', 'cov_uw_c3_5m', 'cov_uw_c4_5m', \
+    # 'u_desvio_7m', 'w_desvio_7m', \
+    # 'cov_uw_c1_7m', 'cov_uw_c2_7m', 'cov_uw_c3_7m', 'cov_uw_c4_7m'])
+    #
+    # return cuad_inst_df
+    # return cuad_inst_1_5
 
 
 # Iterar sobre los datos
@@ -108,6 +172,10 @@ def flujo_uw_cuad(flujos_desvios):
 #             cov_uw_c3_1_5 = 0
 #             cov_uw_c4_1_5 = cov_uw_1_5
 #
+#         cuad_inst_1_5.append([u_1_5, w_1_5, cov_uw_c1_1_5, cov_uw_c2_1_5, cov_uw_c3_1_5, cov_uw_c4_1_5])
+#         cuad_inst_1_5_df = pd.DataFrame(cuad_inst_1_5)
+#
+#
 # # Iterar sobre los datos
 # # para el nivel de 3 m
 #     for u_3, w_3 in zip(u_desvio_3, w_desvio_3):
@@ -135,6 +203,9 @@ def flujo_uw_cuad(flujos_desvios):
 #             cov_uw_c2_3 = 0
 #             cov_uw_c3_3 = 0
 #             cov_uw_c4_3 = cov_uw_3
+#
+#         cuad_inst_3.append([u_3, w_3, cov_uw_c1_3, cov_uw_c2_3, cov_uw_c3_3, cov_uw_c4_3])
+#         cuad_inst_3_df = pd.DataFrame(cuad_inst_3)
 #
 # # Iterar sobre los datos
 # # para el nivel de 5 m
@@ -164,6 +235,9 @@ def flujo_uw_cuad(flujos_desvios):
 #             cov_uw_c3_5 = 0
 #             cov_uw_c4_5 = cov_uw_5
 #
+#         cuad_inst_5.append([u_5, w_5, cov_uw_c1_5, cov_uw_c2_5, cov_uw_c3_5, cov_uw_c4_5])
+#         cuad_inst_5_df = pd.DataFrame(cuad_inst_5)
+#
 # # Iterar sobre los datos
 # # para el nivel de 5 m
 #     for u_7, w_7 in zip(u_desvio_7, w_desvio_7):
@@ -192,13 +266,27 @@ def flujo_uw_cuad(flujos_desvios):
 #             cov_uw_c3_7 = 0
 #             cov_uw_c4_7 = cov_uw_7
 #
+#         cuad_inst_7.append([u_7, w_7, cov_uw_c1_7, cov_uw_c2_7, cov_uw_c3_7, cov_uw_c4_7])
+#         cuad_inst_7_df = pd.DataFrame(cuad_inst_7)
+#
+#     cuad_inst = pd.concat([cuad_inst_1_5_df, cuad_inst_3_df, cuad_inst_5_df, cuad_inst_7_df])
+#
 #     # Agregar los resultados a la lista de resultados
-#     cuad_inst.append((u_1_5, w_1_5, cov_uw_c1_1_5, cov_uw_c2_1_5, cov_uw_c3_1_5, cov_uw_c4_1_5,\
-#     u_3, w_3, cov_uw_c1_3, cov_uw_c2_3, cov_uw_c3_3, cov_uw_c4_3,\
-#     u_5, w_5, cov_uw_c1_5, cov_uw_c2_5, cov_uw_c3_5, cov_uw_c4_5,\
-#     u_7, w_7, cov_uw_c1_7, cov_uw_c2_7, cov_uw_c3_7, cov_uw_c4_7))
+#     # cuad_inst.append((u_1_5, w_1_5, cov_uw_c1_1_5, cov_uw_c2_1_5, cov_uw_c3_1_5, cov_uw_c4_1_5,\
+#     # u_3, w_3, cov_uw_c1_3, cov_uw_c2_3, cov_uw_c3_3, cov_uw_c4_3,\
+#     # u_5, w_5, cov_uw_c1_5, cov_uw_c2_5, cov_uw_c3_5, cov_uw_c4_5,\
+#     # u_7, w_7, cov_uw_c1_7, cov_uw_c2_7, cov_uw_c3_7, cov_uw_c4_7))
 #     #voy por aca, tengo que hacer los otros niveles y los v'w'
-#     cuad_inst_df = pd.DataFrame(cuad_inst, columns=['u_desvio_1_5', 'w_desvio_1_5', 'flujo_uw_c1_1_5', 'flujo_uw_c2_1_5', 'flujo_uw_c3_1_5', 'flujo_uw_c4_1_5'])
+#     cuad_inst_df = pd.DataFrame(cuad_inst, columns=['u_desvio_1.5m', 'w_desvio_1.5m', \
+#     'cov_uw_c1_1.5m', 'cov_uw_c2_1.5m', 'cov_uw_c3_1.5m', 'cov_uw_c4_1.5m', \
+#     'u_desvio_3m', 'w_desvio_3m', \
+#     'cov_uw_c1_3m', 'cov_uw_c2_3m', 'cov_uw_c3_3m', 'cov_uw_c4_3m', \
+#     'u_desvio_5m', 'w_desvio_5m', \
+#     'cov_uw_c1_5m', 'cov_uw_c2_5m', 'cov_uw_c3_5m', 'cov_uw_c4_5m', \
+#     'u_desvio_7m', 'w_desvio_7m', \
+#     'cov_uw_c1_7m', 'cov_uw_c2_7m', 'cov_uw_c3_7m', 'cov_uw_c4_7m'])
+#
+# #    cuad_inst_df = pd.DataFrame(cuad_inst, columns=['u_desvio_1_5', 'w_desvio_1_5', 'flujo_uw_c1_1_5', 'flujo_uw_c2_1_5', 'flujo_uw_c3_1_5', 'flujo_uw_c4_1_5'])
 #     return cuad_inst_df
 #
 
