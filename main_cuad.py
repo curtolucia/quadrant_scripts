@@ -1,7 +1,7 @@
 import os
 import pandas as pd
 
-from func_uw_cuad import flujo_uw_cuad
+from func_uw_cuad import calc_cuad, flujo_uw_cuad
 from func_uw_S import flujo_uw_S
 #
 # from flujo_wT_cuad import flujo_wT_cuad
@@ -35,24 +35,27 @@ for day in range(31, 32):
             flujos_medios = pd.read_csv(ruta_entrada_medios + datos + str(day) + '_' + str(arch).zfill(4) + \
             '.csv',header=0,na_values='NAN') #lee el archivo guardado
 
-            calidad = pd.read_csv(ruta_entrada_calidad + datos + str(day) + '_' + str(arch).zfill(4) + \
-            '.csv',header=0,na_values='NAN')
-            faltantes = pd.read_csv(ruta_entrada_faltantes + datos + str(day) + '_' + str(arch).zfill(4) + \
-            '.csv',header=0,na_values='NAN')
-
-            lim_calidad = 250
-            lim_faltantes = 30
-
-            col_cov_uw = ['cov_uw_1.5m', 'cov_uw_3m', 'cov_uw_5m', 'cov_uw_7m']
-            check_calidad = (calidad[col_cov_uw] < lim_calidad).all(axis=1)
-
-            col_uw = ['u_1.5m', 'w_1.5m', 'u_3m', 'w_3m', 'u_5m', 'w_5m', \
-            'u_7m', 'w_7m']
-            check_faltantes = (faltantes[col_uw] < lim_faltantes).all(axis=1)
+            # calidad = pd.read_csv(ruta_entrada_calidad + datos + str(day) + '_' + str(arch).zfill(4) + \
+            # '.csv',header=0,na_values='NAN')
+            # faltantes = pd.read_csv(ruta_entrada_faltantes + datos + str(day) + '_' + str(arch).zfill(4) + \
+            # '.csv',header=0,na_values='NAN')
+            #
+            # lim_calidad = 250
+            # lim_faltantes = 30
+            #
+            # col_cov_uw = ['cov_uw_1.5m', 'cov_uw_3m', 'cov_uw_5m', 'cov_uw_7m']
+            # check_calidad = (calidad[col_cov_uw] < lim_calidad).all(axis=1)
+            #
+            # col_uw = ['u_1.5m', 'w_1.5m', 'u_3m', 'w_3m', 'u_5m', 'w_5m', \
+            # 'u_7m', 'w_7m']
+            # check_faltantes = (faltantes[col_uw] < lim_faltantes).all(axis=1)
 
             totales_uw_cuad = flujo_uw_cuad(flujos_desvios)
-            # totales_uw_cuad.to_csv (ruta_salida_cuad + datos + str(day) + '_' + str(arch) + '.csv', index=False)
+            totales_uw_cuad.to_csv (ruta_salida_cuad + datos + str(day) + '_' + str(arch) + '.csv', index=False)
 
+            S_uw_cuad = flujo_uw_S(totales_uw_cuad,flujos_medios)
+            S_uw_cuad.to_csv (ruta_salida_S + datos + str(day) + '_' + str(arch) + '.csv')
+            # print(S_uw_cuad.loc['S_cuad1','S_1.5m'])
             # if check_calidad.all() & check_faltantes.all():
             #
             #     totales_uw_cuad = flujo_uw_cuad(flujos_desvios)
