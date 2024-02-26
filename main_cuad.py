@@ -1,7 +1,8 @@
 import os
 import pandas as pd
 
-from func_uw_cuad import calc_cuad, flujo_uw_cuad
+# from func_aux import calc_cuad, calc_S
+from func_uw_cuad import flujo_uw_cuad
 from func_wT_cuad import flujo_wT_cuad
 from func_wc_cuad import flujo_wc_cuad
 from func_uw_S import flujo_uw_S

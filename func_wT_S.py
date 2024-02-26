@@ -1,6 +1,7 @@
 import pandas as pd
 import math
-from func_uw_S import calc_S
+
+from func_aux import calc_S
 
 #-------------------------------------------------------------------------------------------
 #Defino funcion para calculo de los Si,0 para wT

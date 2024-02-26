@@ -1,16 +1,7 @@
 import pandas as pd
 import math
 
-#-------------------------------------------------------------------------------------------
-#Defino una funcion para calcular las Si,0 (H=0) por cuadrantes
-#-------------------------------------------------------------------------------------------
-def calc_S(cov_c1,cov_c2,cov_c3, cov_c4, cov):
-    S_c1 = cov_c1/cov
-    S_c2 = cov_c2/cov
-    S_c3 = cov_c3/cov
-    S_c4 = cov_c4/cov
-    return S_c1, S_c2, S_c3, S_c4
-
+from func_aux import calc_S
 #-------------------------------------------------------------------------------------------
 #Defino funcion para calculo de los Si,0 para uw
 #-------------------------------------------------------------------------------------------

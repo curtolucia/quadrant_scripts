@@ -1,5 +1,6 @@
-from func_uw_cuad import calc_cuad
 import pandas as pd
+
+from func_aux import calc_cuad
 
 #-------------------------------------------------------------------------------------------
 #Defino funcion para calculo de los Si,0 para wc

@@ -2,16 +2,7 @@
 import pandas as pd
 import numpy as np
 
-#-------------------------------------------------------------------------------------------
-#Defino una funcion para separar las covarianzas por cuadrantes
-#-------------------------------------------------------------------------------------------
-def calc_cuad(u, w, cov):
-    u_w_c1 = np.where((u >= 0) & (w >= 0), cov, 0)
-    u_w_c2 = np.where((u < 0) & (w > 0), cov, 0)
-    u_w_c3 = np.where((u < 0) & (w < 0), cov, 0)
-    u_w_c4 = np.where((u > 0) & (w < 0), cov, 0)
-    return u_w_c1, u_w_c2, u_w_c3, u_w_c4
-
+from func_aux import calc_cuad
 #-------------------------------------------------------------------------------------------
 #Defino funcion para calculo de los cuadrantes para uw
 #-------------------------------------------------------------------------------------------
