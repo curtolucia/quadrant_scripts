@@ -1,8 +1,9 @@
 import os
 import pandas as pd
+import numpy as np
 
 # from func_aux import calc_cuad, calc_S
-from func_uw_cuad import flujo_uw_cuad
+from func_uw_cuad import flujo_uw_cuad, flujo_uw_cuad_nan
 from func_wT_cuad import flujo_wT_cuad
 from func_wc_cuad import flujo_wc_cuad
 from func_uw_S import flujo_uw_S
@@ -51,7 +52,7 @@ if not os.path.exists(ruta_salida_S_wc):
 datos = 'SM_140_2022-08-'
 
 for day in range(1, 2):
-    for arch in range(30, 2400):
+    for arch in range(30, 100):
         if not os.path.isfile(ruta_entrada_medios + datos + str(day).zfill(2) + '_' + str(arch).zfill(4) + '.csv'):
             continue
         else:
@@ -68,24 +69,196 @@ for day in range(1, 2):
             lim_calidad = 250
             lim_faltantes = 30
 
+# #-------------------------------------------------------------------------------------------
+# #proceso para uw en 1.5m
+# #chequeo de calidad de datos y faltantes
+# # metodo de los cuadrantes
+# #-------------------------------------------------------------------------------------------
+
             col_cov_uw_1_5 = ['cov_uw_1.5m']
             check_calidad_uw_1_5 = (calidad[col_cov_uw_1_5] < lim_calidad).all(axis=1)
 
             col_uw_1_5 = ['u_1.5m', 'w_1.5m']
             check_faltantes_uw_1_5 = (faltantes[col_uw_1_5] < lim_faltantes).all(axis=1)
 
-            flujos_desvio_1_5 = pd.DataFrame(flujos_desvios['u_desvio_1.5m'], flujos_desvios['v_desvio_1.5m'], \
-            flujos_desvios['w_desvio_1.5m'], \
-            flujos_desvios['cov_uw_1.5m'], cov_vw_1_5 = flujos_desvios['cov_vw_1.5m'], \
-            index=['u_desvio','v_desvio','w_desvio','cov_uw','cov_vw'])
+            flujos_desvio_1_5 = pd.DataFrame({
+            'u_desvio': flujos_desvios['u_desvio_1.5m'],
+            'w_desvio': flujos_desvios['w_desvio_1.5m'],
+            'cov_uw': flujos_desvios['cov_uw_1.5m']})
+
+            flujos_medios_1_5 = pd.DataFrame({'cov_uw': flujos_medios['cov_uw_1.5m']})
 
             if check_calidad_uw_1_5.all() & check_calidad_uw_1_5.all():
+
                 totales_uw_cuad_1_5 = flujo_uw_cuad(flujos_desvio_1_5)
+
                 S_uw_cuad_1_5 = flujo_uw_S(totales_uw_cuad_1_5,flujos_medios_1_5)
+                S_uw_cuad_1_5 = pd.DataFrame({
+                'S_cuad1_1.5m': S_uw_cuad_1_5['S_cuad1'].values,
+                'S_cuad2_1.5m': S_uw_cuad_1_5['S_cuad2'].values,
+                'S_cuad3_1.5m': S_uw_cuad_1_5['S_cuad3'].values,
+                'S_cuad4_1.5m': S_uw_cuad_1_5['S_cuad4'].values})
+
+                totales_uw_cuad_1_5.columns = ['u_desvio_1.5m', 'w_desvio_1.5m', \
+                'cov_uw_c1_1.5m', 'cov_uw_c2_1.5m', 'cov_uw_c3_1.5m', 'cov_uw_c4_1.5m']
 
             else:
-                totales_uw_cuad_1_5 = np.nan
-                S_uw_cuad_1_5 = np.nan
+
+                totales_uw_cuad_1_5 = flujo_uw_cuad_nan(flujos_desvio_1_5)
+                totales_uw_cuad_1_5.columns = ['u_desvio_1.5m', 'w_desvio_1.5m', \
+                'cov_uw_c1_1.5m', 'cov_uw_c2_1.5m', 'cov_uw_c3_1.5m', 'cov_uw_c4_1.5m']
+
+                S_uw_cuad_1_5 = pd.DataFrame({
+                'S_cuad1_1.5m': [np.nan],
+                'S_cuad2_1.5m': [np.nan],
+                'S_cuad3_1.5m': [np.nan],
+                'S_cuad4_1.5m': [np.nan]})
+
+#-------------------------------------------------------------------------------------------
+#proceso para uw en 3m
+#chequeo de calidad de datos y faltantes
+# metodo de los cuadrantes
+#-------------------------------------------------------------------------------------------
+
+            col_cov_uw_3 = ['cov_uw_3m']
+            check_calidad_uw_3 = (calidad[col_cov_uw_3] < lim_calidad).all(axis=1)
+
+            col_uw_3 = ['u_3m', 'w_3m']
+            check_faltantes_uw_3 = (faltantes[col_uw_3] < lim_faltantes).all(axis=1)
+
+            flujos_desvio_3 = pd.DataFrame({
+            'u_desvio': flujos_desvios['u_desvio_3m'],
+            'w_desvio': flujos_desvios['w_desvio_3m'],
+            'cov_uw': flujos_desvios['cov_uw_3m']})
+
+            flujos_medios_3 = pd.DataFrame({'cov_uw': flujos_medios['cov_uw_3m']})
+
+            if check_calidad_uw_3.all() & check_calidad_uw_3.all():
+
+                totales_uw_cuad_3 = flujo_uw_cuad(flujos_desvio_3)
+
+                S_uw_cuad_3 = flujo_uw_S(totales_uw_cuad_3,flujos_medios_3)
+                S_uw_cuad_3 = pd.DataFrame({
+                'S_cuad1_3m': S_uw_cuad_3['S_cuad1'].values,
+                'S_cuad2_3m': S_uw_cuad_3['S_cuad2'].values,
+                'S_cuad3_3m': S_uw_cuad_3['S_cuad3'].values,
+                'S_cuad4_3m': S_uw_cuad_3['S_cuad4'].values})
+
+                totales_uw_cuad_3.columns = ['u_desvio_3m', 'w_desvio_3m', \
+                'cov_uw_c1_3m', 'cov_uw_c2_3m', 'cov_uw_c3_3m', 'cov_uw_c4_3m']
+
+            else:
+
+                totales_uw_cuad_3 = flujo_uw_cuad_nan(flujos_desvio_3)
+                totales_uw_cuad_3.columns = ['u_desvio_3m', 'w_desvio_3m', \
+                'cov_uw_c1_3m', 'cov_uw_c2_3m', 'cov_uw_c3_3m', 'cov_uw_c4_3m']
+
+                S_uw_cuad_3 = pd.DataFrame({
+                'S_cuad1_3m': [np.nan],
+                'S_cuad2_3m': [np.nan],
+                'S_cuad3_3m': [np.nan],
+                'S_cuad4_3m': [np.nan]})
+
+#-------------------------------------------------------------------------------------------
+#proceso para uw en 5m
+#chequeo de calidad de datos y faltantes
+# metodo de los cuadrantes
+#-------------------------------------------------------------------------------------------
+
+            col_cov_uw_5 = ['cov_uw_5m']
+            check_calidad_uw_5 = (calidad[col_cov_uw_5] < lim_calidad).all(axis=1)
+
+            col_uw_5 = ['u_5m', 'w_5m']
+            check_faltantes_uw_5 = (faltantes[col_uw_5] < lim_faltantes).all(axis=1)
+
+            flujos_desvio_5 = pd.DataFrame({
+            'u_desvio': flujos_desvios['u_desvio_5m'],
+            'w_desvio': flujos_desvios['w_desvio_5m'],
+            'cov_uw': flujos_desvios['cov_uw_5m']})
+
+            flujos_medios_5 = pd.DataFrame({'cov_uw': flujos_medios['cov_uw_5m']})
+
+            if check_calidad_uw_5.all() & check_calidad_uw_5.all():
+
+                totales_uw_cuad_5 = flujo_uw_cuad(flujos_desvio_5)
+
+                S_uw_cuad_5 = flujo_uw_S(totales_uw_cuad_5,flujos_medios_5)
+                S_uw_cuad_5 = pd.DataFrame({
+                'S_cuad1_5m': S_uw_cuad_5['S_cuad1'].values,
+                'S_cuad2_5m': S_uw_cuad_5['S_cuad2'].values,
+                'S_cuad3_5m': S_uw_cuad_5['S_cuad3'].values,
+                'S_cuad4_5m': S_uw_cuad_5['S_cuad4'].values})
+
+                totales_uw_cuad_5.columns = ['u_desvio_5m', 'w_desvio_5m', \
+                'cov_uw_c1_5m', 'cov_uw_c2_5m', 'cov_uw_c3_5m', 'cov_uw_c4_5m']
+
+            else:
+
+                totales_uw_cuad_5 = flujo_uw_cuad_nan(flujos_desvio_5)
+                totales_uw_cuad_5.columns = ['u_desvio_5m', 'w_desvio_5m', \
+                'cov_uw_c1_5m', 'cov_uw_c2_5m', 'cov_uw_c3_5m', 'cov_uw_c4_5m']
+
+                S_uw_cuad_5 = pd.DataFrame({
+                'S_cuad1_5m': [np.nan],
+                'S_cuad2_5m': [np.nan],
+                'S_cuad3_5m': [np.nan],
+                'S_cuad4_5m': [np.nan]})
+
+#-------------------------------------------------------------------------------------------
+#proceso para uw en 7m
+#chequeo de calidad de datos y faltantes
+# metodo de los cuadrantes
+#-------------------------------------------------------------------------------------------
+
+            col_cov_uw_7 = ['cov_uw_7m']
+            check_calidad_uw_7 = (calidad[col_cov_uw_7] < lim_calidad).all(axis=1)
+
+            col_uw_7 = ['u_7m', 'w_7m']
+            check_faltantes_uw_7 = (faltantes[col_uw_7] < lim_faltantes).all(axis=1)
+
+            flujos_desvio_7 = pd.DataFrame({
+            'u_desvio': flujos_desvios['u_desvio_7m'],
+            'w_desvio': flujos_desvios['w_desvio_7m'],
+            'cov_uw': flujos_desvios['cov_uw_7m']})
+
+            flujos_medios_7 = pd.DataFrame({'cov_uw': flujos_medios['cov_uw_7m']})
+
+            if check_calidad_uw_7.all() & check_calidad_uw_7.all():
+
+                totales_uw_cuad_7 = flujo_uw_cuad(flujos_desvio_7)
+
+                S_uw_cuad_7 = flujo_uw_S(totales_uw_cuad_7,flujos_medios_7)
+                S_uw_cuad_7 = pd.DataFrame({
+                'S_cuad1_7m': S_uw_cuad_7['S_cuad1'].values,
+                'S_cuad2_7m': S_uw_cuad_7['S_cuad2'].values,
+                'S_cuad3_7m': S_uw_cuad_7['S_cuad3'].values,
+                'S_cuad4_7m': S_uw_cuad_7['S_cuad4'].values})
+
+                totales_uw_cuad_7.columns = ['u_desvio_7m', 'w_desvio_7m', \
+                'cov_uw_c1_7m', 'cov_uw_c2_7m', 'cov_uw_c3_7m', 'cov_uw_c4_7m']
+
+            else:
+
+                totales_uw_cuad_7 = flujo_uw_cuad_nan(flujos_desvio_7)
+                totales_uw_cuad_7.columns = ['u_desvio_7m', 'w_desvio_7m', \
+                'cov_uw_c1_7m', 'cov_uw_c2_7m', 'cov_uw_c3_7m', 'cov_uw_c4_7m']
+
+                S_uw_cuad_7 = pd.DataFrame({
+                'S_cuad1_7m': [np.nan],
+                'S_cuad2_7m': [np.nan],
+                'S_cuad3_7m': [np.nan],
+                'S_cuad4_7m': [np.nan]})
+
+
+            totales_uw_cuad = pd.concat([totales_uw_cuad_1_5,\
+            totales_uw_cuad_3,totales_uw_cuad_5,totales_uw_cuad_7], axis=1)
+
+            totales_uw_cuad.to_csv (ruta_salida_cuad_uw + datos + str(day).zfill(2) + '_' + str(arch).zfill(4) + '.csv', index=False, na_rep='NAN')
+
+            S_uw_cuad = pd.concat([S_uw_cuad_1_5,\
+            S_uw_cuad_3,S_uw_cuad_5,S_uw_cuad_7], axis=1)
+
+            S_uw_cuad.to_csv (ruta_salida_S_uw + datos + str(day).zfill(2) + '_' + str(arch).zfill(4) + '.csv', index=False, na_rep='NAN')
 
 
 # #-------------------------------------------------------------------------------------------

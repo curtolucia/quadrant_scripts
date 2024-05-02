@@ -15,22 +15,37 @@ def flujo_uw_cuad(flujos_desvios):
 #leo de los archivos las columnas correspondientes a u
     u_desvio = flujos_desvios['u_desvio']
 #leo de los archivos las columnas correspondientes a v
-    v_desvio = flujos_desvios['v_desvio']
+    # v_desvio = flujos_desvios['v_desvio']
 #leo de los archivos las columnas correspondientes a w
     w_desvio = flujos_desvios['w_desvio']
 # #leo las cov de cantidad de movimiento uw y vw
     cov_uw = flujos_desvios['cov_uw']
-    cov_vw = flujos_desvios['cov_vw']
+    # cov_vw = flujos_desvios['cov_vw']
 
 # Creo lista para almacenar los datos
     cuad_inst = []
 # Iterar para todos los valores instantaneos de uw
 #para los niveles de 1.5 m, 3 m, 5 m y 7 m
+
     for u_d, w_d, cov_d in zip(u_desvio, w_desvio, cov_uw):
         cov_uw_c1, cov_uw_c2, cov_uw_c3, cov_uw_c4 = calc_cuad(u_d, w_d, cov_d)
-# Guardar los resultados en la variable 'cuad_inst_1_5'
+# Guardar los resultados en la variable 'cuad_inst'
         cuad_inst.append([u_d, w_d, cov_uw_c1.tolist(), cov_uw_c2.tolist(), cov_uw_c3.tolist(), cov_uw_c4.tolist()])
 
+    cuad_inst_df = pd.DataFrame(cuad_inst, columns=['u_desvio', 'w_desvio', \
+    'cov_uw_c1', 'cov_uw_c2', 'cov_uw_c3', 'cov_uw_c4'])
+    return cuad_inst_df
+
+def flujo_uw_cuad_nan(flujos_desvios):
+
+    cuad_inst_df = flujos_desvios[['u_desvio', 'w_desvio']].copy()
+
+    nuevas_columnas = ['cov_uw_c1', 'cov_uw_c2', 'cov_uw_c3', 'cov_uw_c4']
+
+    for columna in nuevas_columnas:
+        cuad_inst_df[columna] = np.nan
+
+    return cuad_inst_df
 
 # #leo de los archivos las columnas correspondientes a u
 #     u_desvio_1_5 = flujos_desvios['u_desvio_1.5m']
