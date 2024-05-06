@@ -28,12 +28,17 @@ def flujo_uw_cuad(flujos_desvios):
 #para los niveles de 1.5 m, 3 m, 5 m y 7 m
 
     for u_d, w_d, cov_d in zip(u_desvio, w_desvio, cov_uw):
-        cov_uw_c1, cov_uw_c2, cov_uw_c3, cov_uw_c4 = calc_cuad(u_d, w_d, cov_d)
+
+        if np.isnan(u_d) or np.isnan(w_d):
+            cov_uw_c1 = cov_uw_c2 = cov_uw_c3 = cov_uw_c4 = np.nan
+        else:
+            cov_uw_c1, cov_uw_c2, cov_uw_c3, cov_uw_c4 = calc_cuad(u_d, w_d, cov_d)
 # Guardar los resultados en la variable 'cuad_inst'
-        cuad_inst.append([u_d, w_d, cov_uw_c1.tolist(), cov_uw_c2.tolist(), cov_uw_c3.tolist(), cov_uw_c4.tolist()])
+        cuad_inst.append([u_d, w_d, cov_uw_c1, cov_uw_c2, cov_uw_c3, cov_uw_c4])
 
     cuad_inst_df = pd.DataFrame(cuad_inst, columns=['u_desvio', 'w_desvio', \
     'cov_uw_c1', 'cov_uw_c2', 'cov_uw_c3', 'cov_uw_c4'])
+
     return cuad_inst_df
 
 def flujo_uw_cuad_nan(flujos_desvios):

@@ -1,5 +1,6 @@
 import pandas as pd
 import math
+import numpy as np
 
 from func_aux import calc_S
 #-------------------------------------------------------------------------------------------
