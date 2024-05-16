@@ -49,7 +49,7 @@ def flujo_wc_cuad(flujos_desvios):
         else:
             cov_wCO2_c1, cov_wCO2_c2, cov_wCO2_c3, cov_wCO2_c4 = calc_cuad(CO2_d, w_d, cov_d)
 # Guardar los resultados en la variable 'cuad_inst_CO2'
-        cuad_inst_CO2.append([w_d, CO2_d, cov_wCO2_c1, cov_wCO2_c2, cov_wCO2_c3, cov_wCO2_c4])
+        cuad_inst_CO2.append([CO2_d, cov_wCO2_c1, cov_wCO2_c2, cov_wCO2_c3, cov_wCO2_c4])
     cuad_inst_CO2_df = pd.DataFrame(cuad_inst_CO2, columns=['CO2_desvio', \
     'cov_wCO2_c1', 'cov_wCO2_c2', 'cov_wCO2_c3', 'cov_wCO2_c4'])
 
@@ -59,7 +59,7 @@ def flujo_wc_cuad(flujos_desvios):
         else:
             cov_wq_c1, cov_wq_c2, cov_wq_c3, cov_wq_c4 = calc_cuad(q_d, w_d, cov_d)
 # Guardar los resultados en la variable 'cuad_inst_q'
-        cuad_inst_q.append([w_d, q_d, cov_wq_c1, cov_wq_c2, cov_wq_c3, cov_wq_c4])
+        cuad_inst_q.append([q_d, cov_wq_c1, cov_wq_c2, cov_wq_c3, cov_wq_c4])
     cuad_inst_q_df = pd.DataFrame(cuad_inst_q, columns=['q_desvio', \
     'cov_wq_c1', 'cov_wq_c2', 'cov_wq_c3', 'cov_wq_c4'])
 
