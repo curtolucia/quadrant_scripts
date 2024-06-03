@@ -13,14 +13,14 @@ from func_wc_S import flujo_wc_S
 # from flujo_wT_cuad import flujo_wT_cuad
 # from flujo_wT_S_H import flujo_wT_S_H
 
-ruta_entrada_faltantes = '.././faltantes/2021-2022/SM_140/2021/04/'
-ruta_entrada_calidad = '.././calidad/2021-2022/SM_140/2021/04/'
+ruta_entrada_faltantes = '.././faltantes/2021-2022/SM_140/2021/12/'
+ruta_entrada_calidad = '.././calidad/2021-2022/SM_140/2021/12/'
 
-ruta_entrada_desvios = '.././desvios/2021-2022/SM_140/2021/04/'
-ruta_entrada_medios = '.././medios/2021-2022/SM_140/2021/04/'
+ruta_entrada_desvios = '.././desvios/2021-2022/SM_140/2021/12/'
+ruta_entrada_medios = '.././medios/2021-2022/SM_140/2021/12/'
 
-ruta_salida_cuad_uw = '.././cuadrantes/flujo_uw/2021-2022/SM_140/2021/04/'
-ruta_salida_S_uw = '.././SiH/Si0/flujo_uw/2021-2022/SM_140/2021/04/'
+ruta_salida_cuad_uw = '.././cuadrantes/flujo_uw/2021-2022/SM_140/2021/12/'
+ruta_salida_S_uw = '.././SiH/Si0/flujo_uw/2021-2022/SM_140/2021/12/'
 
 #Creo el directorio de salida (ruta_salida) si no existe
 if not os.path.exists(ruta_salida_cuad_uw):
@@ -29,8 +29,8 @@ if not os.path.exists(ruta_salida_cuad_uw):
 if not os.path.exists(ruta_salida_S_uw):
     os.makedirs(ruta_salida_S_uw)
 
-ruta_salida_cuad_wT = '.././cuadrantes/flujo_wT/2021-2022/SM_140/2021/04/'
-ruta_salida_S_wT = '.././SiH/Si0/flujo_wT/2021-2022/SM_140/2021/04/'
+ruta_salida_cuad_wT = '.././cuadrantes/flujo_wT/2021-2022/SM_140/2021/12/'
+ruta_salida_S_wT = '.././SiH/Si0/flujo_wT/2021-2022/SM_140/2021/12/'
 
 #Creo el directorio de salida (ruta_salida) si no existe
 if not os.path.exists(ruta_salida_cuad_wT):
@@ -39,8 +39,8 @@ if not os.path.exists(ruta_salida_cuad_wT):
 if not os.path.exists(ruta_salida_S_wT):
     os.makedirs(ruta_salida_S_wT)
 
-ruta_salida_cuad_wc = '.././cuadrantes/flujo_wc/2021-2022/SM_140/2021/04/'
-ruta_salida_S_wc = '.././SiH/Si0/flujo_wc/2021-2022/SM_140/2021/04/'
+ruta_salida_cuad_wc = '.././cuadrantes/flujo_wc/2021-2022/SM_140/2021/12/'
+ruta_salida_S_wc = '.././SiH/Si0/flujo_wc/2021-2022/SM_140/2021/12/'
 
 #Creo el directorio de salida (ruta_salida) si no existe
 if not os.path.exists(ruta_salida_cuad_wc):
@@ -49,7 +49,7 @@ if not os.path.exists(ruta_salida_cuad_wc):
 if not os.path.exists(ruta_salida_S_wc):
     os.makedirs(ruta_salida_S_wc)
 
-datos = 'SM_140_2021-04-'
+datos = 'SM_140_2021-12-'
 
 for day in range(1, 32):
     for arch in range(0, 2400):
