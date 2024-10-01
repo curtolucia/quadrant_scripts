@@ -13,34 +13,42 @@ from func_wc_S import flujo_wc_S
 # from flujo_wT_cuad import flujo_wT_cuad
 # from flujo_wT_S_H import flujo_wT_S_H
 
-ruta_entrada_faltantes = '.././faltantes/2021-2022/SM_140/2022/08/'
-ruta_entrada_calidad = '.././calidad/2021-2022/SM_140/2022/08/'
+# ruta_entrada_faltantes = '.././faltantes/2021-2022/SM_140/2021/08/'
+# ruta_entrada_calidad = '.././calidad/2021-2022/SM_140/2021/08/'
+ruta_entrada_faltantes = '/media/lucia/vnor01_2t/Cuadrantes_Python_UFSM/faltantes/2021-2022/SM_140/2021/08/'
+ruta_entrada_calidad = '/media/lucia/vnor01_2t/Cuadrantes_Python_UFSM/calidad/2021-2022/SM_140/2021/08/'
 
-ruta_entrada_desvios = '.././desvios/2021-2022/SM_140/2022/08/'
-ruta_entrada_medios = '.././medios/2021-2022/SM_140/2022/08/'
+# ruta_entrada_desvios = '.././desvios/2021-2022/SM_140/2021/08/'
+# ruta_entrada_medios = '.././medios/2021-2022/SM_140/2021/08/'
+ruta_entrada_desvios = '/media/lucia/vnor01_2t/Cuadrantes_Python_UFSM/desvios/2021-2022/SM_140/2021/08/'
+ruta_entrada_medios = '/media/lucia/vnor01_2t/Cuadrantes_Python_UFSM/medios/2021-2022/SM_140/2021/08/'
 
-ruta_salida_cuad_uw = '.././cuadrantes/flujo_uw/2021-2022/SM_140/2022/08/'
-ruta_salida_S_uw = '.././SiH/Si0/flujo_uw/2021-2022/SM_140/2022/08/'
+# ruta_salida_cuad_uw = '.././cuadrantes/flujo_uw/2021-2022/SM_140/2021/08/'
+# ruta_salida_S_uw = '.././SiH/Si0/flujo_uw/2021-2022/SM_140/2021/08/'
+#
+# #Creo el directorio de salida (ruta_salida) si no existe
+# if not os.path.exists(ruta_salida_cuad_uw):
+#     os.makedirs(ruta_salida_cuad_uw)
+# #Creo el directorio de salida (ruta_salida) si no existe
+# if not os.path.exists(ruta_salida_S_uw):
+#     os.makedirs(ruta_salida_S_uw)
+#
+# ruta_salida_cuad_wT = '.././cuadrantes/flujo_wT/2021-2022/SM_140/2021/08/'
+# ruta_salida_S_wT = '.././SiH/Si0/flujo_wT/2021-2022/SM_140/2021/08/'
+#
+# #Creo el directorio de salida (ruta_salida) si no existe
+# if not os.path.exists(ruta_salida_cuad_wT):
+#     os.makedirs(ruta_salida_cuad_wT)
+# #Creo el directorio de salida (ruta_salida) si no existe
+# if not os.path.exists(ruta_salida_S_wT):
+#     os.makedirs(ruta_salida_S_wT)
 
-#Creo el directorio de salida (ruta_salida) si no existe
-if not os.path.exists(ruta_salida_cuad_uw):
-    os.makedirs(ruta_salida_cuad_uw)
-#Creo el directorio de salida (ruta_salida) si no existe
-if not os.path.exists(ruta_salida_S_uw):
-    os.makedirs(ruta_salida_S_uw)
+# ruta_salida_cuad_wc = '.././cuadrantes/flujo_wc/2021-2022/SM_140/2021/08/'
+# ruta_salida_S_wc = '.././SiH/Si0/flujo_wc/2021-2022/SM_140/2021/08/'
 
-ruta_salida_cuad_wT = '.././cuadrantes/flujo_wT/2021-2022/SM_140/2022/08/'
-ruta_salida_S_wT = '.././SiH/Si0/flujo_wT/2021-2022/SM_140/2022/08/'
+ruta_salida_cuad_wc = '/media/lucia/vnor01_2t/Cuadrantes_Python_UFSM/cuadrantes/flujo_wc/2021-2022/SM_140/2021/08/'
+ruta_salida_S_wc = '/media/lucia/vnor01_2t/Cuadrantes_Python_UFSM/SiH/Si0/flujo_wc/2021-2022/SM_140/2021/08/'
 
-#Creo el directorio de salida (ruta_salida) si no existe
-if not os.path.exists(ruta_salida_cuad_wT):
-    os.makedirs(ruta_salida_cuad_wT)
-#Creo el directorio de salida (ruta_salida) si no existe
-if not os.path.exists(ruta_salida_S_wT):
-    os.makedirs(ruta_salida_S_wT)
-
-ruta_salida_cuad_wc = '.././cuadrantes/flujo_wc/2021-2022/SM_140/2022/08/'
-ruta_salida_S_wc = '.././SiH/Si0/flujo_wc/2021-2022/SM_140/2022/08/'
 
 #Creo el directorio de salida (ruta_salida) si no existe
 if not os.path.exists(ruta_salida_cuad_wc):
@@ -49,9 +57,9 @@ if not os.path.exists(ruta_salida_cuad_wc):
 if not os.path.exists(ruta_salida_S_wc):
     os.makedirs(ruta_salida_S_wc)
 
-datos = 'SM_140_2022-08-'
+datos = 'SM_140_2021-08-'
 
-for day in range(1, 2):
+for day in range(1, 32):
     for arch in range(30, 2400):
         if not os.path.isfile(ruta_entrada_medios + datos + str(day).zfill(2) + '_' + str(arch).zfill(4) + '.csv'):
             continue
@@ -507,18 +515,22 @@ for day in range(1, 2):
                 'S_q_cuad4_3m': S_wc_cuad_3['S_q_cuad4'].values})
 
                 totales_wc_cuad_3.columns = ['w_desvio_3m', \
-                'T_desvio_3m', 'CO2_desvio_3m', 'q_desvio_3m', \
+                'T_desvio_3m', \
                 'cov_wT_c1_3m', 'cov_wT_c2_3m', 'cov_wT_c3_3m', 'cov_wT_c4_3m', \
+                'CO2_desvio_3m', \
                 'cov_wCO2_c1_3m', 'cov_wCO2_c2_3m', 'cov_wCO2_c3_3m', 'cov_wCO2_c4_3m', \
+                'q_desvio_3m', \
                 'cov_wq_c1_3m', 'cov_wq_c2_3m', 'cov_wq_c3_3m', 'cov_wq_c4_3m']
 
             else:
 
                 totales_wc_cuad_3 = flujo_wc_cuad_nan(flujos_desvio_3)
                 totales_wc_cuad_3.columns = ['w_desvio_3m', \
-                'T_desvio_3m', 'CO2_desvio_3m', 'q_desvio_3m', \
+                'T_desvio_3m', \
                 'cov_wT_c1_3m', 'cov_wT_c2_3m', 'cov_wT_c3_3m', 'cov_wT_c4_3m', \
+                'CO2_desvio_3m', \
                 'cov_wCO2_c1_3m', 'cov_wCO2_c2_3m', 'cov_wCO2_c3_3m', 'cov_wCO2_c4_3m', \
+                'q_desvio_3m', \
                 'cov_wq_c1_3m', 'cov_wq_c2_3m', 'cov_wq_c3_3m', 'cov_wq_c4_3m']
 
                 S_wc_cuad_3 = pd.DataFrame({
@@ -543,7 +555,7 @@ for day in range(1, 2):
 
             totales_wc_cuad_3.to_csv (ruta_salida_cuad_wc + datos + str(day).zfill(2) + '_' + str(arch).zfill(4) + '.csv', index=False, na_rep='NAN')
 
-            S_wc_cuad_3.to_csv (ruta_salida_S_wc + datos + str(day).zfill(2) + '_' + str(arch).zfill(4) + '.csv', index=False, na_rep='NAN')
+            # S_wc_cuad_3.to_csv (ruta_salida_S_wc + datos + str(day).zfill(2) + '_' + str(arch).zfill(4) + '.csv', index=False, na_rep='NAN')
 
 # #-------------------------------------------------------------------------------------------
 # # metodo de los cuadrantes para wc (wCO2 y wq)
