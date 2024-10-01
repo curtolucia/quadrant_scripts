@@ -13,41 +13,34 @@ from func_wc_S import flujo_wc_S
 # from flujo_wT_cuad import flujo_wT_cuad
 # from flujo_wT_S_H import flujo_wT_S_H
 
-# ruta_entrada_faltantes = '.././faltantes/2021-2022/SM_140/2021/08/'
-# ruta_entrada_calidad = '.././calidad/2021-2022/SM_140/2021/08/'
-ruta_entrada_faltantes = '/media/lucia/vnor01_2t/Cuadrantes_Python_UFSM/faltantes/2021-2022/SM_140/2021/08/'
-ruta_entrada_calidad = '/media/lucia/vnor01_2t/Cuadrantes_Python_UFSM/calidad/2021-2022/SM_140/2021/08/'
+ruta_entrada_faltantes = '.././faltantes/2021-2022/SM_140/2021/08/'
+ruta_entrada_calidad = '.././calidad/2021-2022/SM_140/2021/08/'
 
-# ruta_entrada_desvios = '.././desvios/2021-2022/SM_140/2021/08/'
-# ruta_entrada_medios = '.././medios/2021-2022/SM_140/2021/08/'
-ruta_entrada_desvios = '/media/lucia/vnor01_2t/Cuadrantes_Python_UFSM/desvios/2021-2022/SM_140/2021/08/'
-ruta_entrada_medios = '/media/lucia/vnor01_2t/Cuadrantes_Python_UFSM/medios/2021-2022/SM_140/2021/08/'
+ruta_entrada_desvios = '.././desvios/2021-2022/SM_140/2021/08/'
+ruta_entrada_medios = '.././medios/2021-2022/SM_140/2021/08/'
 
-# ruta_salida_cuad_uw = '.././cuadrantes/flujo_uw/2021-2022/SM_140/2021/08/'
-# ruta_salida_S_uw = '.././SiH/Si0/flujo_uw/2021-2022/SM_140/2021/08/'
-#
-# #Creo el directorio de salida (ruta_salida) si no existe
-# if not os.path.exists(ruta_salida_cuad_uw):
-#     os.makedirs(ruta_salida_cuad_uw)
-# #Creo el directorio de salida (ruta_salida) si no existe
-# if not os.path.exists(ruta_salida_S_uw):
-#     os.makedirs(ruta_salida_S_uw)
-#
-# ruta_salida_cuad_wT = '.././cuadrantes/flujo_wT/2021-2022/SM_140/2021/08/'
-# ruta_salida_S_wT = '.././SiH/Si0/flujo_wT/2021-2022/SM_140/2021/08/'
-#
-# #Creo el directorio de salida (ruta_salida) si no existe
-# if not os.path.exists(ruta_salida_cuad_wT):
-#     os.makedirs(ruta_salida_cuad_wT)
-# #Creo el directorio de salida (ruta_salida) si no existe
-# if not os.path.exists(ruta_salida_S_wT):
-#     os.makedirs(ruta_salida_S_wT)
+ruta_salida_cuad_uw = '.././cuadrantes/flujo_uw/2021-2022/SM_140/2021/08/'
+ruta_salida_S_uw = '.././SiH/Si0/flujo_uw/2021-2022/SM_140/2021/08/'
 
-# ruta_salida_cuad_wc = '.././cuadrantes/flujo_wc/2021-2022/SM_140/2021/08/'
-# ruta_salida_S_wc = '.././SiH/Si0/flujo_wc/2021-2022/SM_140/2021/08/'
+#Creo el directorio de salida (ruta_salida) si no existe
+if not os.path.exists(ruta_salida_cuad_uw):
+    os.makedirs(ruta_salida_cuad_uw)
+#Creo el directorio de salida (ruta_salida) si no existe
+if not os.path.exists(ruta_salida_S_uw):
+    os.makedirs(ruta_salida_S_uw)
 
-ruta_salida_cuad_wc = '/media/lucia/vnor01_2t/Cuadrantes_Python_UFSM/cuadrantes/flujo_wc/2021-2022/SM_140/2021/08/'
-ruta_salida_S_wc = '/media/lucia/vnor01_2t/Cuadrantes_Python_UFSM/SiH/Si0/flujo_wc/2021-2022/SM_140/2021/08/'
+ruta_salida_cuad_wT = '.././cuadrantes/flujo_wT/2021-2022/SM_140/2021/08/'
+ruta_salida_S_wT = '.././SiH/Si0/flujo_wT/2021-2022/SM_140/2021/08/'
+
+#Creo el directorio de salida (ruta_salida) si no existe
+if not os.path.exists(ruta_salida_cuad_wT):
+    os.makedirs(ruta_salida_cuad_wT)
+#Creo el directorio de salida (ruta_salida) si no existe
+if not os.path.exists(ruta_salida_S_wT):
+    os.makedirs(ruta_salida_S_wT)
+
+ruta_salida_cuad_wc = '.././cuadrantes/flujo_wc/2021-2022/SM_140/2021/08/'
+ruta_salida_S_wc = '.././SiH/Si0/flujo_wc/2021-2022/SM_140/2021/08/'
 
 
 #Creo el directorio de salida (ruta_salida) si no existe
