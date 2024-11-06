@@ -68,14 +68,25 @@ def flujo_wc_cuad(flujos_desvios):
 
 
 def flujo_wc_cuad_nan(flujos_desvios):
+    # Crear DataFrame solo con w_desvio y T_desvio
+    cuad_inst_T_df = flujos_desvios[['w_desvio', 'T_desvio']].copy()
+    cuad_inst_CO2_df = flujos_desvios[['CO2_desvio']].copy()
+    cuad_inst_q_df = flujos_desvios[['q_desvio']].copy()
 
-    cuad_inst_df = flujos_desvios[['w_desvio','T_desvio', 'CO2_desvio', 'q_desvio']].copy()
+    # Nuevas columnas para cada DataFrame
+    nuevas_columnas_T = ['cov_wT_c1', 'cov_wT_c2', 'cov_wT_c3', 'cov_wT_c4']
+    nuevas_columnas_CO2 = ['cov_wCO2_c1', 'cov_wCO2_c2', 'cov_wCO2_c3', 'cov_wCO2_c4']
+    nuevas_columnas_q = ['cov_wq_c1', 'cov_wq_c2', 'cov_wq_c3', 'cov_wq_c4']
 
-    nuevas_columnas = ['cov_wT_c1', 'cov_wT_c2', 'cov_wT_c3', 'cov_wT_c4',\
-    'cov_wCO2_c1', 'cov_wCO2_c2', 'cov_wCO2_c3', 'cov_wCO2_c4',\
-    'cov_wq_c1', 'cov_wq_c2', 'cov_wq_c3', 'cov_wq_c4']
+    # Añadir columnas NaN a cada DataFrame
+    for columna in nuevas_columnas_T:
+        cuad_inst_T_df[columna] = np.nan
+    for columna in nuevas_columnas_CO2:
+        cuad_inst_CO2_df[columna] = np.nan
+    for columna in nuevas_columnas_q:
+        cuad_inst_q_df[columna] = np.nan
 
-    for columna in nuevas_columnas:
-        cuad_inst_df[columna] = np.nan
+    # Concatenar todos los DataFrames para tener una estructura similar al primer código
+    cuad_inst_df = pd.concat([cuad_inst_T_df, cuad_inst_CO2_df, cuad_inst_q_df], axis=1)
 
     return cuad_inst_df
